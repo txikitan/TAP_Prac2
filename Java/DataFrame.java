@@ -9,11 +9,11 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public abstract class DataFrame implements Iterable<List<String>>, IDataFrame {
+public abstract class DataFrame implements Iterable<List<String>> {
 
 
     /*Counters for the number of columns and rows of the dataframe*/
-    protected int columns, rows;
+    protected int labels, rows;
     /*The DataFrame will be stored in a LinkedHashMap with the label and all the column values stored in a list<string> */
     protected LinkedHashMap<String, List<String>> df = new LinkedHashMap<>();
 
@@ -44,7 +44,7 @@ public abstract class DataFrame implements Iterable<List<String>>, IDataFrame {
 
     /*Returns a specific item by number indexes*/
     public String iat(int row, int col) {
-        if(col<this.columns && col>=0 && row<this.rows && row>=0) {
+        if(col<this.labels && col>=0 && row<this.rows && row>=0) {
             Set<String> keys = this.df.keySet();
             String[] keyList = keys.toArray(new String[0]);
             String key = keyList[col];
@@ -55,7 +55,7 @@ public abstract class DataFrame implements Iterable<List<String>>, IDataFrame {
 
     /*Returns number of columns*/
     public int columns() {
-        return this.columns;
+        return this.labels;
     }
 
     /*Returns number of rows*/
@@ -86,7 +86,7 @@ public abstract class DataFrame implements Iterable<List<String>>, IDataFrame {
                         ,LinkedHashMap<String,List<String>>::new)); // we want it as a linkedHashMap to preserve the order
     }
 
-    /*public void accept(DataFrameVisitor v, String label) {
+    public void accept(AbstractDataFrameVisitor v, String label) {
         v.visit(this, label);
-    }*/
+    }
 }

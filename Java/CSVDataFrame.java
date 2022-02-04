@@ -13,13 +13,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CSVDataFrame extends DataFrame implements IDataFrame{
+public class CSVDataFrame extends DataFrame{
 
     /*Reads a csv file and converts it into a DataFrame*/
     public CSVDataFrame(String file) throws IOException, CsvException {
         CSVReader reader = new CSVReader(new FileReader(file));
         List<String[]> r = reader.readAll();    // captures all rows in the csv and stores in r
-        super.columns = r.get(0).length;
+        super.labels = r.get(0).length;
         List<String> col;                       // will contain the value for each entry of the linkedhashmap (column of the csv)
         int j;                                  // inner counter for rows
         for(int i=0;i<r.get(0).length;i++) {    // we iterate till we end up with all the labels
