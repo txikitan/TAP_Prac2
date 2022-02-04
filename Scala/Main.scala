@@ -1,3 +1,9 @@
+/*-------------------------------------------------------------
+- TAP JavaDataFrame: Scala main class to demostrate all the
+      features implemented
+
+    Gabriel Garcia
+/-------------------------------------------------------------*/
 object Main {
   def main(args: Array[String]): Unit ={
     var directory = new Directory("Directorio")

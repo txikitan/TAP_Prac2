@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public abstract class DataFrame implements Iterable<List<String>> {
 
 
-    /*Counters for the number of columns and rows of the dataframe*/
+    /*Counters for the number of columns(labels) and rows of the dataframe*/
     protected int labels, rows;
     /*The DataFrame will be stored in a LinkedHashMap with the label and all the column values stored in a list<string> */
     protected LinkedHashMap<String, List<String>> df = new LinkedHashMap<>();
