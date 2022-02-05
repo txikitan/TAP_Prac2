@@ -42,8 +42,8 @@ class Directory(val name:String) extends DataFrame {
   override def accept(dataFrameVisitor: AbstractDataFrameVisitor,label: String, predicate: Predicate[String]): Unit = {
     dataFrameVisitor match {
       case dataFrameVisitor: CounterVisitor => // if we are on a counterVisitor; we just need to see if it's a directory or not, so we call the visit method directly over the Directory (we don't want to navigate through subdirectories)
-        for(child<-children) dataFrameVisitor.visit(child,label,predicate)
-      case dataFrameVisitor: FilterVisitor => // if we are working with a FilterVisitor, we will query each subdirectory dataframe recursively
+        children.foreach(child=>dataFrameVisitor.visit(child,label,predicate))
+      case _ => // if we are working with a FilterVisitor or any other Visitor, we will query each subdirectory dataframe recursively normally
         children.foreach(_.accept(dataFrameVisitor,label,predicate))
     }
   }
