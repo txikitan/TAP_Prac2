@@ -3,7 +3,8 @@
 
     Gabriel Garcia
 /-------------------------------------------------------------*/
-
+import java.util.function.Predicate
 trait AbstractDataFrameVisitor {
-  def visit(df:DataFrame, label:String):Unit
+  
+  def visit(df:DataFrame, label:String, predicate : Predicate[String]):Unit
 }

@@ -4,6 +4,7 @@
     Gabriel Garcia
 /-------------------------------------------------------------*/
 import java.util
+import java.util.function.Predicate
 import scala.collection.mutable.ListBuffer
 
 class Directory(val name:String) extends DataFrame {
@@ -18,7 +19,7 @@ class Directory(val name:String) extends DataFrame {
   /*Removes child from the directory*/
   def removeChild(child: DataFrame): Unit = {
     children -= child
-    labels = labels - child.labels
+    labels = labels - child.labels  // Thanks to this, we won't need to do a map and a sum in the size and columns methods
     rows = rows - child.rows
   }
 
@@ -37,7 +38,15 @@ class Directory(val name:String) extends DataFrame {
   /*Returns number of labels in the directory (all files included)*/
   override def columns: Int = labels
 
-
+  /*Main visitor method that will call the accept method for each dataframe in the directory*/
+  override def accept(dataFrameVisitor: AbstractDataFrameVisitor,label: String, predicate: Predicate[String]): Unit = {
+    dataFrameVisitor match {
+      case dataFrameVisitor: CounterVisitor => // if we are on a counterVisitor; we just need to see if it's a directory or not, so we call the visit method directly over the Directory (we don't want to navigate through subdirectories)
+        for(child<-children) dataFrameVisitor.visit(child,label,predicate)
+      case dataFrameVisitor: FilterVisitor => // if we are working with a FilterVisitor, we will query each subdirectory dataframe recursively
+        children.foreach(_.accept(dataFrameVisitor,label,predicate))
+    }
+  }
 
 }
 

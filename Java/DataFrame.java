@@ -86,7 +86,8 @@ public abstract class DataFrame implements Iterable<List<String>> {
                         ,LinkedHashMap<String,List<String>>::new)); // we want it as a linkedHashMap to preserve the order
     }
 
-    public void accept(AbstractDataFrameVisitor v, String label) {
-        v.visit(this, label);
+    /*Visitor method that will execute the external operation visit over the dataframe*/
+    public void accept(AbstractDataFrameVisitor v, String label, Predicate<String> predicate) {
+        v.visit(this, label,predicate);
     }
 }
