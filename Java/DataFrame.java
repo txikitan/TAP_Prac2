@@ -90,4 +90,9 @@ public abstract class DataFrame implements Iterable<List<String>> {
     public void accept(AbstractDataFrameVisitor v, String label, Predicate<String> predicate) {
         v.visit(this, label,predicate);
     }
+    
+    /*Recursion part method to retrieve a column of the DataFrame*/
+    public List<String> getCol(String key) {
+        return df.get(key);
+    }
 }
